@@ -1,0 +1,5 @@
+[tool.poetry]
+name = "python-log-analyzer"
+version = "0.1.0"
+description = "Lightweight log parsing and detection tool"
+authors = ["Your Name <you@example.com>"]
