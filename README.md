@@ -1,50 +1,132 @@
 # Python Log Analyzer
 
-A compact, extensible log analyzer for basic blue-team detection: parses Sysmon-like and Linux auth logs, runs lightweight detectors, and generates CSV/HTML reports.
+[Python](https://img.shields.io/badge/Python-3.10+-blue)
+[Security Project](https://img.shields.io/badge/Focus-Cybersecurity-red)
+[MITRE ATT&CK](https://img.shields.io/badge/Framework-MITRE%20ATT%26CK-orange)
+[Status](https://img.shields.io/badge/Status-Active-brightgreen)
+[License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-**Tech:** Python, Click, Jinja2, Pandas (optional)
+---
 
-## Features
-- Parse simple Sysmon-style logs and Linux auth logs
-- Detects:
-  - Encoded PowerShell commands (base64)
-  - New user creation commands (`net user`, `useradd`)
-  - Failed SSH login attempts
-- Generates CSV and HTML reports
-- Unit tests included
+## About
 
-## Quickstart
+The **Python Log Analyzer** is a security-focused log analysis tool designed to simulate a Security Operations Center (SOC) workflow.  
+It parses authentication logs (Linux/Windows), detects suspicious activity, and generates structured alerts.  
 
-```bash
-git clone <your-repo-url>
-cd python-log-analyzer
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+The project demonstrates:
+- Threat detection and alerting logic
+- MITRE ATT&CK mapping
+- SOC-style reporting with CSV/HTML/JSON outputs  
 
-# run against sample sysmon
-python -m src.loganalyzer.main analyze tests/sample_logs/sample_sysmon.log --source sysmon --out examples/report_sysmon
+This tool is ideal for showcasing cybersecurity, SOC, and security engineering skills in a portfolio or interview scenario.
 
-# run against sample auth
-python -m src.loganalyzer.main analyze tests/sample_logs/sample_auth.log --source auth --out examples/report_auth
+---
+
+## 🔥 Features
+
+- Detect failed login bursts (Brute Force / Password Spray)  
+- Detect login failures followed by success (Credential Stuffing)  
+- Flag unknown usernames (Recon & Enumeration)  
+- Parse standard auth logs and Windows Event logs  
+- JSON/CSV/HTML detection outputs for SOC pipelines  
+- MITRE ATT&CK mapped alerts  
+
+### MITRE Mapping
+
+| Behavior                 | MITRE Technique                    |
+|--------------------------|-----------------------------------|
+| Failed login bursts      | T1110 – Brute Force               |
+| Login after failures     | T1078 – Valid Accounts            |
+| Unknown usernames        | TA0001 – Initial Access / Recon   |
+
+---
+
+## Tech Stack
+
+- Python 3.10+
+- Regex-based log parsing
+- Pandas for data handling
+- Jinja2 for HTML reports
+- Click for CLI commands
+- Custom detection logic (no third-party SIEM required)
+
+---
+
+## Project Structure
+
 ```
 
-## How it works
-- `parser.py` extracts structured fields from each log line.
-- `detectors.py` contains small detection functions (each returns alert dicts).
-- `reporter.py` writes alerts to CSV and HTML.
+python-log-analyzer/
+│── examples/      # Sample log files
+│── src/           # Source code
+│── output/        # Detected alerts (CSV/HTML/JSON)
+│── README.md
+│── requirements.txt
 
-## Extending
-- Add new detectors to `detectors.py`; map them to MITRE ATT&CK in README.
-- Replace parser with real Sysmon XML/EVTX parsing for production.
+````
 
-## MITRE mapping (examples)
-- `PS-001` — T1059.001 (PowerShell)
-- `ACC-001` — T1078 (Valid Accounts)
-- `AUTH-001` — T1110 (Brute Force)
+---
 
-## Contributing
-PRs welcome. Add tests for new detectors in `tests/`.
+## ⚙️ Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Dwireph18/python-log-analyzer.git
+cd python-log-analyzer
+
+# Install required packages
+pip install -r requirements.txt
+
+# Install the package in editable mode
+pip install -e .
+````
+
+---
+
+## 🚀 Usage
+
+Analyze a log file and generate alerts:
+
+```bash
+python -m loganalyzer.main analyze examples/auth.log --source auth --out examples/report_auth
+```
+
+* `examples/auth.log` → input log file
+* `--source auth` → Linux auth log parser (use `--source windows` for Windows logs)
+* `--out examples/report_auth` → directory for output reports
+
+Check the output folder:
+
+* `alerts.csv` → tabular alerts
+* `alerts.html` → styled HTML report
+* `alerts.json` → structured output for SIEM pipelines
+
+---
+
+## 📂 Demo
+
+Example workflow:
+
+1. Use `examples/auth.log` (provided)
+2. Run the analyzer command above
+3. Open `examples/report_auth/alerts.html` in your browser
+
+You should see detected brute-force attempts, credential stuffing, and unknown username alerts.
+
+---
+
+## ✅ Contribution
+
+Feel free to:
+
+* Add more detection rules
+* Support additional log formats (Windows Event, Sysmon)
+* Improve JSON/SIEM integration
+* Include automated tests using `pytest`
+
+---
 
 ## License
-[MIT](LICENSE)
+
+MIT License – free for personal and commercial use.
+
