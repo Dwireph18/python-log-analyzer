@@ -1,0 +1,14 @@
+LICENSE
+README.md
+pyproject.toml
+src/loganalyzer/__init__.py
+src/loganalyzer/detectors.py
+src/loganalyzer/main.py
+src/loganalyzer/parser.py
+src/loganalyzer/reporter.py
+src/loganalyzer/utils.py
+src/loganalyzer.egg-info/PKG-INFO
+src/loganalyzer.egg-info/SOURCES.txt
+src/loganalyzer.egg-info/dependency_links.txt
+src/loganalyzer.egg-info/top_level.txt
+tests/test_detectors.py
